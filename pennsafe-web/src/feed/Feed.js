@@ -25,7 +25,7 @@ class Feed extends Component {
     };
     return (
       <div className="Feed">
-        <h4>Safety Feed</h4>
+        <h5>Safety Feed</h5>
         <button onClick={this.changeFeed(true)}>Penn Public Safety</button>
         <button onClick={this.changeFeed(false)}>Philadelphia Police</button>
         {/* TwitterTimelineEmbed not updating on prop change, so resorted to this showing/hiding method using css */}

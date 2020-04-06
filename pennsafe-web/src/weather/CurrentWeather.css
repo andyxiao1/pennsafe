@@ -1,0 +1,16 @@
+.CurrentWeather-details {
+  margin-top: 10px;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.row {
+  flex: 1;
+  width: 55%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
