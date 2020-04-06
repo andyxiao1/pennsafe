@@ -9,6 +9,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import edu.upenn.cis350.cis350project.api.APIHandler;
+import edu.upenn.cis350.cis350project.api.APIResponse;
+import edu.upenn.cis350.cis350project.api.APIResponseWrapper;
+import edu.upenn.cis350.cis350project.api.DefaultResponse;
+
 public class HomePageActivity extends AppCompatActivity {
 
     @Override
@@ -37,6 +42,21 @@ public class HomePageActivity extends AppCompatActivity {
         editor.commit();
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+    }
+
+    public void onDeleteClick(View view) {
+        final String username = ((TextView) findViewById(R.id.user_text)).getText().toString();
+        APIHandler a = new APIHandler();
+        a.deleteAccount(username, new APIResponseWrapper() {
+            @Override
+            public void onResponse(APIResponse response) {
+                DefaultResponse deleteResponse = (DefaultResponse) response;
+                if (deleteResponse != null && deleteResponse.getSuccessful()) {
+                    onLogoutClick(null);
+                }
+            }
+        });
+
     }
 
 }

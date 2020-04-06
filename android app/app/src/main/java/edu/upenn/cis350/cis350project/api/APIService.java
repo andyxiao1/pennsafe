@@ -8,14 +8,18 @@ import retrofit2.http.Query;
 public interface APIService {
 
     @GET("validateLogin")
-    Single<LoginResponse> validateLogin(
+    Single<DefaultResponse> validateLogin(
             @Query("username") String username,
             @Query("password") String password);
 
-    // Uses a login response object because it has the same data fields
     @POST("signup")
-    Single<LoginResponse> signup(
+    Single<DefaultResponse> signup(
             @Query("username") String username,
             @Query("password") String password);
+
+    @POST("deleteAccount")
+    Single<DefaultResponse> deleteAccount(
+            @Query("username") String username
+    );
 
 }

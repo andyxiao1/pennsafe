@@ -13,7 +13,7 @@ import android.widget.TextView;
 import edu.upenn.cis350.cis350project.api.APIHandler;
 import edu.upenn.cis350.cis350project.api.APIResponse;
 import edu.upenn.cis350.cis350project.api.APIResponseWrapper;
-import edu.upenn.cis350.cis350project.api.LoginResponse;
+import edu.upenn.cis350.cis350project.api.DefaultResponse;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -54,15 +54,15 @@ public class SignupActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(APIResponse response) {
                     spinner.setVisibility(View.INVISIBLE);
-                    LoginResponse loginResponse = (LoginResponse) response;
-                    if (loginResponse == null) {
+                    DefaultResponse signupResponse = (DefaultResponse) response;
+                    if (signupResponse == null) {
                         ((TextView) findViewById(R.id.warning_text)).setText("Server error.");
-                    } else if (loginResponse.getSuccessful()) {
+                    } else if (signupResponse.getSuccessful()) {
                         Intent intent = new Intent(activity, HomePageActivity.class);
                         intent.putExtra(LoginActivity.USERNAME_TAG, username);
                         startActivity(intent);
                     } else {
-                        ((TextView) findViewById(R.id.warning_text)).setText(loginResponse.getMessage());
+                        ((TextView) findViewById(R.id.warning_text)).setText(signupResponse.getMessage());
                         ((EditText) findViewById(R.id.password_input)).setText("");
                         ((EditText) findViewById(R.id.confirm_password_input)).setText("");
                     }

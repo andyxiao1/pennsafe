@@ -1,7 +1,5 @@
 package edu.upenn.cis350.cis350project.api;
 
-import android.util.Log;
-
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -13,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class APIHandler {
 
-    private final String apiEndpoint = "https://11bc1d7b.ngrok.io";
+    private final String apiEndpoint = "https://5dca4745.ngrok.io";
 
     private Retrofit getRetrofit() {
         Retrofit retrofit = new Retrofit.Builder()
@@ -26,16 +24,16 @@ public class APIHandler {
 
     public void validateLogin(String username, String password, final APIResponseWrapper responseWrapper) {
         APIService apiService = getRetrofit().create(APIService.class);
-        Single<LoginResponse> result = apiService.validateLogin(username, password);
+        Single<DefaultResponse> result = apiService.validateLogin(username, password);
         result.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<LoginResponse>() {
+                .subscribe(new SingleObserver<DefaultResponse>() {
 
                     @Override
                     public void onSubscribe(Disposable d) {}
 
                     @Override
-                    public void onSuccess(LoginResponse response) {
+                    public void onSuccess(DefaultResponse response) {
                         responseWrapper.onResponse(response);
                     }
 
@@ -50,21 +48,42 @@ public class APIHandler {
 
     public void signup(String username, String password, final APIResponseWrapper responseWrapper) {
         APIService apiService = getRetrofit().create(APIService.class);
-        Single<LoginResponse> result = apiService.signup(username, password);
+        Single<DefaultResponse> result = apiService.signup(username, password);
         result.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<LoginResponse>() {
+                .subscribe(new SingleObserver<DefaultResponse>() {
                     @Override
                     public void onSubscribe(Disposable d) {}
 
                     @Override
-                    public void onSuccess(LoginResponse response) {
+                    public void onSuccess(DefaultResponse response) {
                         responseWrapper.onResponse(response);
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
+                        responseWrapper.onResponse(null);
+                    }
+                });
+    }
+
+    public void deleteAccount(String username, final APIResponseWrapper responseWrapper) {
+        APIService apiService = getRetrofit().create(APIService.class);
+        Single<DefaultResponse> result = apiService.deleteAccount(username);
+        result.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<DefaultResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {}
+
+                    @Override
+                    public void onSuccess(DefaultResponse defaultResponse) {
+                        responseWrapper.onResponse(defaultResponse);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
                         responseWrapper.onResponse(null);
                     }
                 });

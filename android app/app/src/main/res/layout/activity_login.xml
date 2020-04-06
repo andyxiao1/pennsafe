@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="108dp"
-        android:text="Saftey App"
+        android:text="Safety App"
         android:textColor="@color/main_dark"
         android:textSize="50dp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import edu.upenn.cis350.cis350project.api.APIHandler;
 import edu.upenn.cis350.cis350project.api.APIResponse;
 import edu.upenn.cis350.cis350project.api.APIResponseWrapper;
-import edu.upenn.cis350.cis350project.api.LoginResponse;
+import edu.upenn.cis350.cis350project.api.DefaultResponse;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
             a.validateLogin(username, password, new APIResponseWrapper() {
                 @Override
                 public void onResponse(APIResponse response) {
-                    LoginResponse loginResponse = (LoginResponse) response;
+                    DefaultResponse loginResponse = (DefaultResponse) response;
                     if (loginResponse == null) {
                         ((TextView) findViewById(R.id.warning_text)).setText("Server error.");
                         ((ProgressBar) findViewById(R.id.loading_spinner)).setVisibility(View.INVISIBLE);
