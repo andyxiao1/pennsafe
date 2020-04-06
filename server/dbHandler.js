@@ -20,16 +20,17 @@ class DBHandler {
 
     findRecord(data, callback) {
         const collection = this.db.collection(this.collectionName);
-        collection.find(data).toArray((err, result) => {
-            callback(err, result);
-        });
+        collection.find(data).toArray(callback);
     }
 
     addRecord(record, callback) {
         const collection = this.db.collection(this.collectionName);
-        collection.insertOne(record, (err, result) => {
-            callback(err, result);
-        });
+        collection.insertOne(record, callback);
+    }
+
+    deleteMatchingRecord(data, callback) {
+        const collection = this.db.collection(this.collectionName);
+        collection.deleteOne(data, callback);
     }
 
 }

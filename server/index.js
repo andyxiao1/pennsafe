@@ -34,13 +34,13 @@ app.post('/signup', (req, res) => {
     accountsHandler.findRecord({username}, (err, result) => {
         if (result.length) {
             return res.json({
-                "successful": false,
-                "message": "User already exists."
+                successful: false,
+                message: "User already exists."
             });
         } else if (err) {
             return res.json({
-                "successful": false,
-                "message": "Backend error."
+                successful: false,
+                message: "Backend error."
             });
         } else {
             accountsHandler.addRecord({username, password}, (err, _) => {
@@ -54,6 +54,17 @@ app.post('/signup', (req, res) => {
             });
         }
     });
+});
+
+app.post("/deleteAccount", (req, res) => {
+    let username = req.query.username;
+    if (username) {
+        accountsHandler.deleteMatchingRecord({username}, (err, result) => {
+            return res.json({successful: !err, message: ""});
+        });
+    } else {
+        return res.json({successful: false, message: "Invalid request params."});
+    }
 });
 
 app.listen(3000, () => {
