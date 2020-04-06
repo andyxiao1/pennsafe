@@ -1,14 +1,18 @@
 import React from 'react';
-import WeatherDashboard from './WeatherDashboard';
-import Feed from './Feed';
+import Card from './shared/Card';
+import WeatherDashboard from './weather/WeatherDashboard';
+import Feed from './feed/Feed';
 import './App.css';
 
 const App = () => {
   return (
     <div className="App">
-      <div className="App-header">PennSafe</div>
-      <WeatherDashboard />
-      {/* <Feed /> */}
+      <Card>
+        <WeatherDashboard />
+      </Card>
+      <Card>
+        <Feed />
+      </Card>
     </div>
   );
 };
