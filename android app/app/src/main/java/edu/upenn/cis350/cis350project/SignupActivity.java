@@ -42,6 +42,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void onNextClick(View view) {
+        ((TextView) findViewById(R.id.warning_text)).setText("");
         if (validateInputs()) {
             final String username = ((EditText) findViewById(R.id.username_input)).getText().toString();
             final String password = ((EditText) findViewById(R.id.password_input)).getText().toString();
@@ -54,7 +55,9 @@ public class SignupActivity extends AppCompatActivity {
                 public void onResponse(APIResponse response) {
                     spinner.setVisibility(View.INVISIBLE);
                     LoginResponse loginResponse = (LoginResponse) response;
-                    if (loginResponse.getSuccessful()) {
+                    if (loginResponse == null) {
+                        ((TextView) findViewById(R.id.warning_text)).setText("Server error.");
+                    } else if (loginResponse.getSuccessful()) {
                         Intent intent = new Intent(activity, HomePageActivity.class);
                         intent.putExtra(LoginActivity.USERNAME_TAG, username);
                         startActivity(intent);

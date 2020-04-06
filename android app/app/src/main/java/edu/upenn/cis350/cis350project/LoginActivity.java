@@ -71,13 +71,17 @@ public class LoginActivity extends AppCompatActivity {
             final String password = ((EditText) findViewById(R.id.password_input)).getText().toString();
             ProgressBar spinner = findViewById(R.id.loading_spinner);
             spinner.setVisibility(View.VISIBLE);
+            ((TextView) findViewById(R.id.warning_text)).setText("");
             APIHandler a = new APIHandler();
             final Activity activity = this;
             a.validateLogin(username, password, new APIResponseWrapper() {
                 @Override
                 public void onResponse(APIResponse response) {
                     LoginResponse loginResponse = (LoginResponse) response;
-                    if (loginResponse.getSuccessful()) {
+                    if (loginResponse == null) {
+                        ((TextView) findViewById(R.id.warning_text)).setText("Server error.");
+                        ((ProgressBar) findViewById(R.id.loading_spinner)).setVisibility(View.INVISIBLE);
+                    } else if (loginResponse.getSuccessful()) {
                         SharedPreferences prefs = getSharedPreferences(LoginActivity.PREFS_LOGIN_DATA, Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = prefs.edit();
                         editor.putBoolean(LoginActivity.PREFS_LOGGED_IN, true);

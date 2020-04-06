@@ -13,8 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class APIHandler {
 
-    private final boolean runOnEmulator = false;
-    private final String apiEndpoint = "http://192.168.1.31:3000";
+    private final String apiEndpoint = "https://11bc1d7b.ngrok.io";
 
     private Retrofit getRetrofit() {
         Retrofit retrofit = new Retrofit.Builder()
@@ -43,6 +42,7 @@ public class APIHandler {
                     @Override
                     public void onError(Throwable e) {
                         responseWrapper.onResponse(null);
+                        e.printStackTrace();
                     }
 
                 });
