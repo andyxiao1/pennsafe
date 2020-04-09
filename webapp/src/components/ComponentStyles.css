@@ -1,0 +1,14 @@
+.metrics_section {
+    border: solid 1px lightgray;
+    border-radius: 15px;
+    padding: 15px;
+}
+
+.metrics_root {
+    margin-bottom: 20px;
+}
+
+.metrics_tag {
+    font-size: 70%;
+    font-style: italic;
+}

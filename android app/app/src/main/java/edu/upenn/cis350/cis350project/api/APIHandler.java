@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class APIHandler {
 
-    private final String apiEndpoint = "https://5dca4745.ngrok.io";
+    private final String apiEndpoint = "http://a3d5cddc.ngrok.io";
 
     private Retrofit getRetrofit() {
         Retrofit retrofit = new Retrofit.Builder()
@@ -43,6 +43,27 @@ public class APIHandler {
                         e.printStackTrace();
                     }
 
+                });
+    }
+
+    public void logLogin(String username) {
+        logLogin(username, null, null);
+    }
+
+    public void logLogin(String username, Double latitude, Double longitude) {
+        APIService apiService = getRetrofit().create(APIService.class);
+        Single<DefaultResponse> result = apiService.logLogin(username, latitude, longitude);
+        result.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<DefaultResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {}
+                    @Override
+                    public void onSuccess(DefaultResponse defaultResponse) {}
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
                 });
     }
 
@@ -84,6 +105,28 @@ public class APIHandler {
 
                     @Override
                     public void onError(Throwable e) {
+                        responseWrapper.onResponse(null);
+                    }
+                });
+    }
+
+    public void getUserData(String username, final APIResponseWrapper responseWrapper) {
+        APIService apiService = getRetrofit().create(APIService.class);
+        Single<UserDataAPIResponse> result = apiService.getUser(username);
+        result.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<UserDataAPIResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {}
+
+                    @Override
+                    public void onSuccess(UserDataAPIResponse userDataAPIResponse) {
+                        responseWrapper.onResponse(userDataAPIResponse);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
                         responseWrapper.onResponse(null);
                     }
                 });

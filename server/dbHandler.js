@@ -17,10 +17,15 @@ class DBHandler {
         }
         catch (e) { console.log(e); }
     }
+    
+    findMultipleRecords(data, callback) {
+        const collection = this.db.collection(this.collectionName);
+        collection.find(data).toArray(callback);
+    }
 
     findRecord(data, callback) {
         const collection = this.db.collection(this.collectionName);
-        collection.find(data).toArray(callback);
+        collection.findOne(data, callback);
     }
 
     addRecord(record, callback) {
@@ -31,6 +36,18 @@ class DBHandler {
     deleteMatchingRecord(data, callback) {
         const collection = this.db.collection(this.collectionName);
         collection.deleteOne(data, callback);
+    }
+
+    updateRecord(key, data, callback) {
+        const collection = this.db.collection(this.collectionName);
+        collection.updateOne(
+            key,
+            {
+                $set: data,
+                $currentDate: { lastModified: true }
+            },
+            callback
+        );
     }
 
 }
