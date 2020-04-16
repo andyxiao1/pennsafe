@@ -63,4 +63,17 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/user_text"
         app:layout_constraintTop_toTopOf="@+id/user_text" />
+
+    <Button
+        android:id="@+id/phone_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/medium_dark"
+        android:onClick="onPhoneClick"
+        android:text="View Phone Numbers"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/delete_button" />
 </androidx.constraintlayout.widget.ConstraintLayout>

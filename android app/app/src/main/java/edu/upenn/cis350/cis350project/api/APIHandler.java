@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class APIHandler {
 
-    private final String apiEndpoint = "http://a3d5cddc.ngrok.io";
+    private final String apiEndpoint =  "http://f1a75d2c.ngrok.io";
 
     private Retrofit getRetrofit() {
         Retrofit retrofit = new Retrofit.Builder()

@@ -36,4 +36,7 @@ public interface APIService {
             @Path("username") String username
     );
 
+    @POST("user/uploadPhoto")
+    Single<DefaultResponse> sendPhoto();
+
 }
