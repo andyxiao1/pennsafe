@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
 
@@ -15,6 +16,8 @@ public class FlashlightActivity extends AppCompatActivity {
     private float alpha;
     private boolean isFlashOn;
     private View flashlight;
+    private static int SHORT_FLASH = 500;
+    private static int LONG_FLASH = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +35,19 @@ public class FlashlightActivity extends AppCompatActivity {
     }
 
     public void onSOS(View view) {
+        Animation flash1 = getFlashAnimation(FlashlightActivity.SHORT_FLASH);
+        Animation flash2 = getFlashAnimation(FlashlightActivity.LONG_FLASH);
+        Animation flash3 = getFlashAnimation(FlashlightActivity.SHORT_FLASH);
+        AnimationSet sos = new AnimationSet(false);
+        sos.addAnimation(flash1);
+        sos.addAnimation(flash2);
+        sos.addAnimation(flash3);
+        flashlight.startAnimation(sos);
     }
 
     public void onThreeFlashes(View view) {
-
+        Animation flash = getFlashAnimation(FlashlightActivity.SHORT_FLASH);
+        flashlight.startAnimation(flash);
     }
 
     public void onIncreaseBrightness(View view) {
@@ -61,23 +73,12 @@ public class FlashlightActivity extends AppCompatActivity {
         }
     }
 
-    public void flash() {
-        Animation animation = new AlphaAnimation(1, 0); // Change alpha
-        // from fully
-        // visible to
-        // invisible
-        animation.setDuration(500); // duration - half a second
-        animation.setInterpolator(new LinearInterpolator()); // do not alter
-        // animation
-        // rate
-        animation.setRepeatCount(Animation.INFINITE); // Repeat animation
-        // infinitely
-        animation.setRepeatMode(Animation.REVERSE); // Reverse animation at
-
-        // the
-        // end so the layout will
-        // fade back in
-        ((LinearLayout) findViewById(R.id.container)).startAnimation(animation);
+    public Animation getFlashAnimation(int duration) {
+        Animation animation = new AlphaAnimation(0, 1);
+        animation.setDuration(duration);
+        animation.setInterpolator(new LinearInterpolator());
+        animation.setRepeatCount(2);
+        return animation;
     }
 }
 
