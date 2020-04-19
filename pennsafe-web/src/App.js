@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { Container, Row, Col, Nav, Navbar } from 'react-bootstrap';
 import Home from './home/Home';
 import Login from './login/Login';
+import Statistics from './statistics/Statistics';
 
 const App = () => (
   <Router>
@@ -22,6 +23,11 @@ const App = () => (
                   Login
                 </Nav.Link>
               </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="statistics" as={Link} to="/statistics">
+                  Statistics
+                </Nav.Link>
+              </Nav.Item>
             </Nav>
           </Navbar>
         </Col>
@@ -30,6 +36,7 @@ const App = () => (
         <Col>
           {/* Sets up URL routes */}
           <Switch>
+            <Route path="/statistics" component={Statistics}></Route>
             <Route path="/login" component={Login}></Route>
             <Route path="/" component={Home}></Route>
           </Switch>
