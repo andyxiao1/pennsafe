@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class APIHandler {
 
-    private final String apiEndpoint =  "http://f1a75d2c.ngrok.io";
+    private final String apiEndpoint =  "http://10.0.2.2:3000";
 
     private Retrofit getRetrofit() {
         Retrofit retrofit = new Retrofit.Builder()
@@ -128,6 +128,40 @@ public class APIHandler {
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         responseWrapper.onResponse(null);
+                    }
+                });
+    }
+
+    public void sendImage(String username, String image) {
+        APIService apiService = getRetrofit().create(APIService.class);
+        Single<DefaultResponse> result = apiService.sendPhoto(username, image);
+        result.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<DefaultResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {}
+                    @Override
+                    public void onSuccess(DefaultResponse defaultResponse) {}
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+                });
+    }
+
+    public void sendUpdatedData(String username, String email, String phone, String address) {
+        APIService apiService = getRetrofit().create(APIService.class);
+        Single<DefaultResponse> result = apiService.sendUpdatedData(username, email, phone, address);
+        result.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<DefaultResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {}
+                    @Override
+                    public void onSuccess(DefaultResponse defaultResponse) {}
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
                     }
                 });
     }

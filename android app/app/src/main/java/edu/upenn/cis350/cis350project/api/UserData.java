@@ -29,11 +29,31 @@ public class UserData {
     @SerializedName("longitude")
     private Double longitude;
 
+    @Expose
+    @SerializedName("email")
+    private String email;
+
+    @Expose
+    @SerializedName("telephone")
+    private String telephone;
+
+    @Expose
+    @SerializedName("address")
+    private String address;
+
+    @Expose
+    @SerializedName("image")
+    private String image;
+
     public String getUsername() { return username; }
     public String getPassword() { return password; }
     public Boolean getBanned() { return banned; }
     public Long getLastLoggedIn() { return lastLoggedIn; }
     public Double getLatitude() { return latitude; }
     public Double getLongitude() { return longitude; }
+    public String getEmail() { return email; }
+    public String getTelephone() { return telephone; }
+    public String getAddress() { return address; }
+    public String getImage() { return image; }
 
 }

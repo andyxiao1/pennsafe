@@ -126,6 +126,12 @@ public class HomePageActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void onAccountClick(View view) {
+        Intent intent = new Intent(this, AccountActivity.class);
+        intent.putExtra("username", user);
+        startActivity(intent);
+    }
+
     public boolean hasLocationPermissions() {
         return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;

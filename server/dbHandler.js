@@ -1,5 +1,8 @@
 const { MongoClient } = require("mongodb");
-const uri = "mongodb+srv://skyler:skyler@safteyappcluster-ymsv8.mongodb.net/test?retryWrites=true&w=majority";
+const skyler = "mongodb+srv://skyler:skyler@safteyappcluster-ymsv8.mongodb.net/test?retryWrites=true&w=majority";
+const steven = "mongodb+srv://maldos:CIS350group73@cluster0-siade.mongodb.net/test?retryWrites=true&w=majority";
+
+const uri = steven;
 
 class DBHandler {
 
