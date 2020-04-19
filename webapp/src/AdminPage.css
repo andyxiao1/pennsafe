@@ -1,0 +1,107 @@
+.admin_page {
+    width: 50%;
+    margin: auto;
+    margin-top: 20px;
+    min-width: 700px;
+    border: solid 1px lightgray;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.title {
+    font-size: 200%;
+    margin-right: 20px;
+}
+
+.error_text {
+    color: crimson;
+}
+
+.banned_user {
+    color: #962020;
+    font-weight: bold;
+}
+
+.active_user {
+    color: #209651;
+    font-weight: bold;
+}
+
+.ban_button {
+    background-color: #962020;
+    color: white;
+    border: none;
+    width: 100%;
+}
+
+.ban_button:hover {
+    color: white;
+    animation: flashing_button .5s infinite;
+}
+
+@keyframes flashing_button {
+    0% { background-color: #962020; }
+    50% { background-color: #966920; }
+}
+
+.form-control:focus{
+    border-color: #ced4da;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.sort_button {
+    background-color: #e9ecef;
+    border: solid 1px #ced4da;
+    color: black;
+    margin: 5px;
+    outline: none !important;
+}
+
+.sort_button:active {
+    background-color: #ced4da !important;
+    border: solid 1px #ced4da !important;
+    color: black;
+    margin: 5px;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.sort_button:hover {
+    background-color: #e9ecef;
+    border: solid 1px #ced4da;
+    color: black;
+    outline: none !important;
+}
+
+.sort_button_selected {
+    background-color: #ced4da !important;
+    border: solid 1px #ced4da !important;
+    color: white;
+    margin: 5px;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.sort_button_selected:active {
+    background-color: #ced4da !important;
+    border: solid 1px #ced4da;
+    color: white;
+    margin: 5px;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.sort_button_selected:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.sort_buttons {
+    text-align: center;
+    padding: 15px;
+}
+
+.table {
+    margin-bottom: 0;
+}
