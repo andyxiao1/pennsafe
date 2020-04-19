@@ -132,6 +132,11 @@ public class HomePageActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void onFlashlightClick(View view) {
+        Intent intent = new Intent(this, FlashlightActivity.class);
+        startActivity(intent);
+    }
+
     public boolean hasLocationPermissions() {
         return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
