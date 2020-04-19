@@ -7,9 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
 import android.view.animation.LinearInterpolator;
-import android.widget.LinearLayout;
 
 public class FlashlightActivity extends AppCompatActivity {
 
@@ -36,13 +34,36 @@ public class FlashlightActivity extends AppCompatActivity {
 
     public void onSOS(View view) {
         Animation flash1 = getFlashAnimation(FlashlightActivity.SHORT_FLASH);
-        Animation flash2 = getFlashAnimation(FlashlightActivity.LONG_FLASH);
-        Animation flash3 = getFlashAnimation(FlashlightActivity.SHORT_FLASH);
-        AnimationSet sos = new AnimationSet(false);
-        sos.addAnimation(flash1);
-        sos.addAnimation(flash2);
-        sos.addAnimation(flash3);
-        flashlight.startAnimation(sos);
+        final Animation flash2 = getFlashAnimation(FlashlightActivity.LONG_FLASH);
+        final Animation flash3 = getFlashAnimation(FlashlightActivity.SHORT_FLASH);
+
+        flash1.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {}
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                flashlight.startAnimation(flash2);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+        });
+
+        flash2.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {}
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                flashlight.startAnimation(flash3);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+        });
+
+        flashlight.startAnimation(flash1);
     }
 
     public void onThreeFlashes(View view) {
