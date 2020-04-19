@@ -1,8 +1,8 @@
 import React from 'react';
 import './Card.css';
 
-const Card = ({ children }) => {
-  return <div className="Card">{children}</div>;
-};
+// NO LONGER USED - switched to bootstrap
+
+const Card = ({ children }) => <div className="Card">{children}</div>;
 
 export default Card;

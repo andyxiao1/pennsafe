@@ -1,20 +1,42 @@
 import React from 'react';
-import Card from './shared/Card';
-import WeatherDashboard from './weather/WeatherDashboard';
-import Feed from './feed/Feed';
-import './App.css';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { Container, Row, Col, Nav, Navbar } from 'react-bootstrap';
+import Home from './home/Home';
+import Login from './login/Login';
 
-const App = () => {
-  return (
-    <div className="App">
-      <Card>
-        <WeatherDashboard />
-      </Card>
-      <Card>
-        <Feed />
-      </Card>
-    </div>
-  );
-};
+const App = () => (
+  <Router>
+    <Container fluid>
+      <Row>
+        <Col>
+          <Navbar>
+            <Navbar.Brand href="/">PennSafe</Navbar.Brand>
+            <Nav variant="pills">
+              <Nav.Item>
+                <Nav.Link eventKey="home" as={Link} to="/">
+                  Home
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="login" as={Link} to="/login">
+                  Login
+                </Nav.Link>
+              </Nav.Item>
+            </Nav>
+          </Navbar>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          {/* Sets up URL routes */}
+          <Switch>
+            <Route path="/login" component={Login}></Route>
+            <Route path="/" component={Home}></Route>
+          </Switch>
+        </Col>
+      </Row>
+    </Container>
+  </Router>
+);
 
 export default App;

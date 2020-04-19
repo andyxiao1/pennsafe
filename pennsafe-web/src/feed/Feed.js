@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { TwitterTimelineEmbed } from 'react-twitter-embed';
-
-import './Feed.css';
+import { Card, Row, Col, Button } from 'react-bootstrap';
 
 class Feed extends Component {
   state = {
-    showPennDPS: true
+    showPennDPS: true,
   };
 
-  changeFeed = showPennDPS => {
+  changeFeed = (showPennDPS) => {
     return () => this.setState({ showPennDPS });
   };
 
@@ -21,13 +20,25 @@ class Feed extends Component {
       noHeader: true,
       noFooter: true,
       noScrollbar: true,
-      options: { height: '80vh' }
+      options: { height: '80vh' },
     };
     return (
-      <div className="Feed">
-        <h5>Safety Feed</h5>
-        <button onClick={this.changeFeed(true)}>Penn Public Safety</button>
-        <button onClick={this.changeFeed(false)}>Philadelphia Police</button>
+      <Card className="p-3 mt-3 text-center">
+        <h1>Safety Feed</h1>
+        <Row className="mb-3">
+          <Col>
+            <Button
+              variant="primary"
+              className="mr-3"
+              onClick={this.changeFeed(true)}
+            >
+              Penn Public Safety
+            </Button>
+            <Button variant="primary" onClick={this.changeFeed(false)}>
+              Philadelphia Police
+            </Button>
+          </Col>
+        </Row>
         {/* TwitterTimelineEmbed not updating on prop change, so resorted to this showing/hiding method using css */}
         <div style={{ display: !showPennDPS && 'none' }}>
           <TwitterTimelineEmbed {...twitterProps} screenName="PennDPS" />
@@ -35,7 +46,7 @@ class Feed extends Component {
         <div style={{ display: showPennDPS && 'none' }}>
           <TwitterTimelineEmbed {...twitterProps} screenName="PhillyPolice" />
         </div>
-      </div>
+      </Card>
     );
   }
 }
