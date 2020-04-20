@@ -1,15 +1,17 @@
 const { MongoClient } = require("mongodb");
 const skyler = "mongodb+srv://skyler:skyler@safteyappcluster-ymsv8.mongodb.net/test?retryWrites=true&w=majority";
 const steven = "mongodb+srv://maldos:CIS350group73@cluster0-siade.mongodb.net/test?retryWrites=true&w=majority";
+const andy = "mongodb+srv://andyxiao1:andyxiao1@cluster0-qbi6m.mongodb.net/test?retryWrites=true&w=majority"
+// TODO add all users to 1 atlas cluster to have 1 connection
 
-const uri = steven;
+const uri = andy;
 
 class DBHandler {
 
     constructor(dbName, collectionName) {
         this.dbName = dbName;
         this.collectionName = collectionName;
-        this.client = new MongoClient(uri, {useUnifiedTopology: true});
+        this.client = new MongoClient(uri, { useUnifiedTopology: true });
     }
 
     async init() {
@@ -20,7 +22,7 @@ class DBHandler {
         }
         catch (e) { console.log(e); }
     }
-    
+
     findMultipleRecords(data, callback) {
         const collection = this.db.collection(this.collectionName);
         collection.find(data).toArray(callback);

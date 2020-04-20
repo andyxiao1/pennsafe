@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:background="#000000 ">
+
+    <View
+        android:id="@+id/flashlight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#ffffff"
+        />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/flashlight_button_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:background="#000000 ">
+
+        <Button
+            android:id="@+id/on_off_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:backgroundTint="@color/medium_dark"
+            android:onClick="onFlashlightOnOff"
+            android:text="ON/OFF"
+            android:textColor="@color/main_light"/>
+
+        <Button
+            android:id="@+id/sos_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:backgroundTint="@color/medium_dark"
+            android:onClick="onSOS"
+            android:text="SOS"
+            android:textColor="@color/main_light"/>
+
+        <Button
+            android:id="@+id/three_flashes_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:backgroundTint="@color/medium_dark"
+            android:onClick="onThreeFlashes"
+            android:text="FLASH"
+            android:textColor="@color/main_light"/>
+
+        <Button
+            android:id="@+id/brightness_up_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:backgroundTint="@color/medium_dark"
+            android:onClick="onIncreaseBrightness"
+            android:text="UP"
+            android:textColor="@color/main_light"/>
+
+        <Button
+            android:id="@+id/brightness_down_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:backgroundTint="@color/medium_dark"
+            android:onClick="onDecreaseBrightness"
+            android:text="DOWN"
+            android:textColor="@color/main_light"/>
+
+    </LinearLayout>
+
+</LinearLayout>
