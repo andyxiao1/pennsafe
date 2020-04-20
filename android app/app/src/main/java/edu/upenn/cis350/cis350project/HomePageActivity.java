@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -27,9 +28,11 @@ import edu.upenn.cis350.cis350project.api.UserDataAPIResponse;
 public class HomePageActivity extends AppCompatActivity {
 
     private final int LOCATION_REQUEST_CODE = 1;
+    private final int REQUEST_GPS_CODE = 2;
 
     private String user;
     private boolean isBanned;
+    private boolean gpsEnabled;
     private boolean locationEnabled;
     private FusedLocationProviderClient fusedLocationClient;
 
@@ -66,19 +69,6 @@ public class HomePageActivity extends AppCompatActivity {
         final APIHandler apiHandler = new APIHandler();
         apiHandler.logLogin(user);
 
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        fusedLocationClient.getLastLocation()
-                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        if (location != null) {
-                            apiHandler.logLogin(user, location.getLatitude(), location.getLongitude());
-                        } else {
-                            apiHandler.logLogin(user);
-                        }
-                    }
-                });
-
         apiHandler.getUserData(user, new APIResponseWrapper() {
             @Override
             public void onResponse(APIResponse response) {
@@ -86,6 +76,8 @@ public class HomePageActivity extends AppCompatActivity {
                 if (dataResponse != null && dataResponse.getUserData() != null) {
                     Boolean bannedData = dataResponse.getUserData().getBanned();
                     isBanned = bannedData == null ? false : bannedData;
+                    Boolean gpsData = dataResponse.getUserData().getGPS();
+                    gpsEnabled = gpsData == null ? true : gpsData;
                     TextView bannedText = findViewById(R.id.banned_text);
                     String text = isBanned ? "Banned" : "Active";
                     int color = isBanned ? Color.RED : Color.GREEN;
@@ -95,6 +87,18 @@ public class HomePageActivity extends AppCompatActivity {
             }
         });
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        if (location != null && gpsEnabled) {
+                            apiHandler.logLogin(user, location.getLatitude(), location.getLongitude());
+                        } else {
+                            apiHandler.logLogin(user);
+                        }
+                    }
+                });
     }
 
     public void onLogoutClick(View view) {
@@ -123,7 +127,9 @@ public class HomePageActivity extends AppCompatActivity {
 
     public void onPhoneClick(View view) {
         Intent intent = new Intent(this, PhoneActivity.class);
-        startActivity(intent);
+        intent.putExtra("gps", gpsEnabled);
+        intent.putExtra("username", user);
+        startActivityForResult(intent, REQUEST_GPS_CODE);
     }
 
     public void onAccountClick(View view) {
@@ -154,6 +160,26 @@ public class HomePageActivity extends AppCompatActivity {
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case (REQUEST_GPS_CODE) : {
+                final APIHandler apiHandler = new APIHandler();
+                apiHandler.getUserData(user, new APIResponseWrapper() {
+                    @Override
+                    public void onResponse(APIResponse response) {
+                        UserDataAPIResponse dataResponse = (UserDataAPIResponse) response;
+                        if (dataResponse != null && dataResponse.getUserData() != null) {
+                            Boolean gpsData = dataResponse.getUserData().getGPS();
+                            gpsEnabled = gpsData == null ? true : gpsData;
+                        }
+                    }
+                });
+            }
         }
     }
 

@@ -50,7 +50,14 @@ public interface APIService {
             @Query("username") String username,
             @Query("email") String email,
             @Query("phone") String phone,
-            @Query("address") String address
+            @Query("address") String address,
+            @Query("nickname") String nickname,
+            @Query("other") String other
     );
 
+    @POST("user/{username}/gps")
+    Single<DefaultResponse> sendGPS(
+            @Path("username") String username,
+            @Query("gps") boolean gps
+    );
 }

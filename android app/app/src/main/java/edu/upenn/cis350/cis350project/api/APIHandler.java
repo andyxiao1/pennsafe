@@ -149,9 +149,28 @@ public class APIHandler {
                 });
     }
 
-    public void sendUpdatedData(String username, String email, String phone, String address) {
+    public void sendUpdatedData(String username, String email, String phone, String address,
+                                    String nickname, String other) {
         APIService apiService = getRetrofit().create(APIService.class);
-        Single<DefaultResponse> result = apiService.sendUpdatedData(username, email, phone, address);
+        Single<DefaultResponse> result = apiService.sendUpdatedData(username, email, phone,
+                                                                        address, nickname, other);
+        result.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<DefaultResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {}
+                    @Override
+                    public void onSuccess(DefaultResponse defaultResponse) {}
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+                });
+    }
+
+    public void postGPSStatus(String username, boolean gps) {
+        APIService apiService = getRetrofit().create(APIService.class);
+        Single<DefaultResponse> result = apiService.sendGPS(username, gps);
         result.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<DefaultResponse>() {

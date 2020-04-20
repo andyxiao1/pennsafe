@@ -17,29 +17,33 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import edu.upenn.cis350.cis350project.api.APIHandler;
+
 public class PhoneActivity extends AppCompatActivity {
     LocationManager locationManager ;
-    boolean GpsStatus ;
-    Context context;
+    String user;
+    boolean gpsStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone);
 
-        context = getApplicationContext();
-        getGPS();
+        user = getIntent().getStringExtra("username");
+        gpsStatus = getIntent().getBooleanExtra("gps", gpsStatus);
 
         Switch s = (Switch) findViewById(R.id.switch1);
-        s.setChecked(GpsStatus);
+        s.setChecked(gpsStatus);
         s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    Intent intent1 = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    startActivity(intent1);
+                    gpsStatus = true;
                 } else {
-                    Log.d("GPS ON", "Turn GPS Off");
+                    gpsStatus = false;
                 }
+
+                APIHandler apiHandler = new APIHandler();
+                apiHandler.postGPSStatus(user, gpsStatus);
             }
         });
     }
@@ -63,16 +67,6 @@ public class PhoneActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(PhoneActivity.this, new String[]{Manifest.permission.CALL_PHONE},1);
             return;
         }
-        Log.d("Here", "Here");
         startActivity(callIntent);
-    }
-
-    public void getGPS() {
-        locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
-        assert locationManager != null;
-        GpsStatus = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        if(GpsStatus == true) {
-            Log.d("GPS", "GPS ON");
-        }
     }
 }

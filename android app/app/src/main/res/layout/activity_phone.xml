@@ -1,35 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical">
 
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Toggle GPS Services" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/security"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:onClick="onButtonClick"
-        android:text="Campus Security" />
+        <Switch
+            android:id="@+id/switch1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:text="Toggle GPS Services"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/security"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/caps"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onButtonClick"
-        android:text="CAPS" />
+        <TextView
+            android:id="@+id/security_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="268dp"
+            android:text="Campus Security:"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toStartOf="@+id/security"
+            app:layout_constraintHorizontal_bias="0.214"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/walking"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onButtonClick"
-        android:text="Walking Escort" />
+        <Button
+            android:id="@+id/security"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="48dp"
+            android:gravity="center"
+            android:onClick="onButtonClick"
+            android:text="037-777-8888"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/security_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.948"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/security_text" />
+
+        <TextView
+            android:id="@+id/escort_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Walking Escort:"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@+id/security_text"
+            app:layout_constraintStart_toStartOf="@+id/security_text"
+            app:layout_constraintTop_toBottomOf="@+id/security_text" />
+
+        <Button
+            android:id="@+id/walking"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onClick="onButtonClick"
+            android:text="037-777-8880"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/escort_text"
+            app:layout_constraintEnd_toEndOf="@+id/security"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/security"
+            app:layout_constraintTop_toTopOf="@+id/escort_text" />
+
+        <TextView
+            android:id="@+id/caps_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="CAPS"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@+id/escort_text"
+            app:layout_constraintHorizontal_bias="0.485"
+            app:layout_constraintStart_toStartOf="@+id/escort_text"
+            app:layout_constraintTop_toBottomOf="@+id/escort_text" />
+
+        <Button
+            android:id="@+id/caps"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onClick="onButtonClick"
+            android:text="037-777-8889"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/caps_text"
+            app:layout_constraintEnd_toEndOf="@+id/walking"
+            app:layout_constraintStart_toStartOf="@+id/walking"
+            app:layout_constraintTop_toTopOf="@+id/caps_text" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </LinearLayout>

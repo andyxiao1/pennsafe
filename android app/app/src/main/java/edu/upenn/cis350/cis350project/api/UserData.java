@@ -18,6 +18,10 @@ public class UserData {
     private Boolean banned;
 
     @Expose
+    @SerializedName("gps")
+    private Boolean gps;
+
+    @Expose
     @SerializedName("lastLoggedIn")
     private Long lastLoggedIn;
 
@@ -42,18 +46,24 @@ public class UserData {
     private String address;
 
     @Expose
+    @SerializedName("nickname")
+    private String nickname;
+
+    @Expose
     @SerializedName("image")
     private String image;
 
     public String getUsername() { return username; }
     public String getPassword() { return password; }
     public Boolean getBanned() { return banned; }
+    public Boolean getGPS() { return gps; }
     public Long getLastLoggedIn() { return lastLoggedIn; }
     public Double getLatitude() { return latitude; }
     public Double getLongitude() { return longitude; }
     public String getEmail() { return email; }
     public String getTelephone() { return telephone; }
     public String getAddress() { return address; }
+    public String getNickname() { return nickname; }
     public String getImage() { return image; }
 
 }

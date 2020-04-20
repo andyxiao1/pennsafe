@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -15,9 +14,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.TestLooperManager;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,12 +25,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import org.w3c.dom.Text;
-
 import java.io.ByteArrayOutputStream;
 import java.util.Base64;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.regex.Pattern;
 
 import edu.upenn.cis350.cis350project.api.APIHandler;
@@ -52,7 +46,6 @@ public class AccountActivity extends AppCompatActivity {
 
     private String imageInfo;
     private String user;
-    private TextView username;
     private ImageView buttonLoadImage;
     private Button buttonSubmit;
     private TextView warningText;
@@ -67,8 +60,6 @@ public class AccountActivity extends AppCompatActivity {
         getPermission();
 
         user = getIntent().getStringExtra("username");
-        username = findViewById(R.id.username);
-        username.setText(user);
         setValues();
         addViews();
 
@@ -90,11 +81,13 @@ public class AccountActivity extends AppCompatActivity {
         TextView[] numbers = {findViewById(R.id.telephone), findViewById(R.id.telephone_text)};
         TextView[] addresses = {findViewById(R.id.address), findViewById(R.id.address_text)};
         TextView[] personal = {findViewById(R.id.personal), findViewById(R.id.personal_text)};
+        TextView[] nickname = {findViewById(R.id.username), findViewById(R.id.username_text)};
 
         views.add(emails);
         views.add(numbers);
         views.add(addresses);
         views.add(personal);
+        views.add(nickname);
     }
 
     private void setValues() {
@@ -109,6 +102,7 @@ public class AccountActivity extends AppCompatActivity {
                     String telephone = userData.getTelephone();
                     String address = userData.getAddress();
                     String image = userData.getImage();
+                    String nickname = userData.getNickname();
 
                     if (email != null) ((TextView) findViewById(R.id.email_text)).setText(email);
                     if (telephone != null)
@@ -116,6 +110,13 @@ public class AccountActivity extends AppCompatActivity {
                     if (address != null)
                         ((TextView) findViewById(R.id.address_text)).setText(address);
                     if (image != null) DecodeImage(image);
+
+                    TextView username = findViewById(R.id.username_text);
+                    if (nickname != null) {
+                        username.setText(nickname);
+                    } else {
+                        username.setText(user);
+                    }
                 }
             }
         });
@@ -215,7 +216,9 @@ public class AccountActivity extends AppCompatActivity {
 
         for (TextView[] v: views) {
             setTextVisibility(v[0], v[1]);
-            v[0].setText(v[1].getText().toString());
+            if (!v[1].getText().toString().equals("Not Available")) {
+                v[0].setText(v[1].getText().toString());
+            }
         }
 
         buttonSubmit.setVisibility(View.VISIBLE);
@@ -231,6 +234,8 @@ public class AccountActivity extends AppCompatActivity {
         String email = ((EditText) findViewById(R.id.email)).getText().toString();
         String telephone = ((EditText) findViewById(R.id.telephone)).getText().toString();
         String address = ((EditText) findViewById(R.id.address)).getText().toString();
+        String nickname = ((EditText) findViewById(R.id.username)).getText().toString();
+        String other = ((EditText) findViewById(R.id.personal)).getText().toString();
 
         if (email == null || telephone == null || address == null) {
             warningText.setText("Please fill out all fields Properly.");
@@ -251,7 +256,7 @@ public class AccountActivity extends AppCompatActivity {
         }
 
         APIHandler apiHandler = new APIHandler();
-        apiHandler.sendUpdatedData(user, email, telephone, address);
+        apiHandler.sendUpdatedData(user, email, telephone, address, nickname, other);
         disableEditView();
     }
 
