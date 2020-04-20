@@ -5,7 +5,9 @@ const path = require('path');
 let DBHandler = require("./dbHandler");
 
 let accountsHandler = new DBHandler("user_accounts", "user_account_records");
+let crimeHandler = new DBHandler("crimes", "crime_records");
 accountsHandler.init();
+crimeHandler.init();
 
 app.use(express.json());
 app.use(express.urlencoded());
@@ -189,6 +191,45 @@ app.post("/user/:username/gps", (req, res) => {
         return res.json({successful: false, message: "Invalid request params."});
     }
     
+});
+
+app.post('/setCrime', (req, res) => {
+    let crime = req.body.username;
+    console.log(crime);
+    // if (!username || !password) {
+    //     return res.json({successful: false, message: "Invalid request params."});
+    // }
+    // accountsHandler.findRecord({username}, (err, result) => {
+    //     if (result && result.length) {
+    //         return res.json({
+    //             successful: false,
+    //             message: "User already exists."
+    //         });
+    //     } else if (err) {
+    //         return res.json({
+    //             successful: false,
+    //             message: "Backend error."
+    //         });
+    //     } else {
+    //         accountsHandler.addRecord(
+    //             {
+    //                 username,
+    //                 password,
+    //                 banned: false,
+    //                 accountType: 'user',
+    //                 gps: true,
+    //                 lastLoggedIn: Date.now()
+    //             }, (err, _) => {
+    //             let successful = true;
+    //             let message = "";
+    //             if (err) {
+    //                 successful = false;
+    //                 message = "Backend error."
+    //             }
+    //             return res.json({successful, message});
+    //         });
+    //     }
+    // });
 });
 
 app.use(express.static(path.join(__dirname, '/../webapp/build/')));
