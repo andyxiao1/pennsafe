@@ -2,101 +2,101 @@
   {
     "classification": "robbery",
     "date": "2020-04-12T00:00:00.000Z",
-    "time": 1
+    "time": "1 AM"
   },
   {
     "classification": "robbery",
     "date": "2020-04-13T00:00:00.000Z",
-    "time": 10
+    "time": "10 AM"
   },
   {
     "classification": "robbery",
     "date": "2020-04-14T00:00:00.000Z",
-    "time": 15
+    "time": "3 PM"
   },
   {
     "classification": "robbery",
     "date": "2020-04-14T00:00:00.000Z",
-    "time": 15
+    "time": "3 PM"
   },
   {
     "classification": "robbery",
     "date": "2020-04-14T00:00:00.000Z",
-    "time": 17
+    "time": "5 PM"
   },
   {
     "classification": "robbery",
     "date": "2020-04-15T00:00:00.000Z",
-    "time": 17
+    "time": "5 PM"
   },
   {
     "classification": "burglary",
     "date": "2020-04-15T00:00:00.000Z",
-    "time": 18
+    "time": "6 PM"
   },
   {
     "classification": "burglary",
     "date": "2020-04-15T00:00:00.000Z",
-    "time": 19
+    "time": "7 PM"
   },
   {
     "classification": "burglary",
     "date": "2020-04-15T00:00:00.000Z",
-    "time": 19
+    "time": "7 PM"
   },
   {
     "classification": "assault",
     "date": "2020-04-15T00:00:00.000Z",
-    "time": 20
+    "time": "8 PM"
   },
   {
     "classification": "assault",
     "date": "2020-04-16T00:00:00.000Z",
-    "time": 20
+    "time": "8 PM"
   },
   {
     "classification": "assault",
     "date": "2020-04-16T00:00:00.000Z",
-    "time": 21
+    "time": "9 PM"
   },
   {
     "classification": "assault",
     "date": "2020-04-16T00:00:00.000Z",
-    "time": 21
+    "time": "9 PM"
   },
   {
     "classification": "assault",
     "date": "2020-04-16T00:00:00.000Z",
-    "time": 22
+    "time": "10 PM"
   },
   {
     "classification": "weapon",
     "date": "2020-04-16T00:00:00.000Z",
-    "time": 22
+    "time": "10 PM"
   },
   {
     "classification": "weapon",
     "date": "2020-04-17T00:00:00.000Z",
-    "time": 23
+    "time": "11 PM"
   },
   {
     "classification": "fraud",
     "date": "2020-04-17T00:00:00.000Z",
-    "time": 23
+    "time": "11 PM"
   },
   {
     "classification": "fraud",
     "date": "2020-04-17T00:00:00.000Z",
-    "time": 23
+    "time": "11 PM"
   },
   {
     "classification": "fraud",
     "date": "2020-04-18T00:00:00.000Z",
-    "time": 12
+    "time": "12 AM"
   },
   {
     "classification": "fraud",
     "date": "2020-04-18T00:00:00.000Z",
-    "time": 12
+    "time": "12 AM"
   }
 ]
