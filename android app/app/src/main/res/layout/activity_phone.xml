@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
-            android:text="Toggle GPS Services"
+            android:text="Toggle GPS Tracking"
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/security"
             app:layout_constraintEnd_toEndOf="parent"
