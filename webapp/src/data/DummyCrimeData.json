@@ -1,0 +1,102 @@
+[
+  {
+    "classification": "robbery",
+    "date": "2020-04-12T00:00:00.000Z",
+    "time": 1
+  },
+  {
+    "classification": "robbery",
+    "date": "2020-04-13T00:00:00.000Z",
+    "time": 10
+  },
+  {
+    "classification": "robbery",
+    "date": "2020-04-14T00:00:00.000Z",
+    "time": 15
+  },
+  {
+    "classification": "robbery",
+    "date": "2020-04-14T00:00:00.000Z",
+    "time": 15
+  },
+  {
+    "classification": "robbery",
+    "date": "2020-04-14T00:00:00.000Z",
+    "time": 17
+  },
+  {
+    "classification": "robbery",
+    "date": "2020-04-15T00:00:00.000Z",
+    "time": 17
+  },
+  {
+    "classification": "burglary",
+    "date": "2020-04-15T00:00:00.000Z",
+    "time": 18
+  },
+  {
+    "classification": "burglary",
+    "date": "2020-04-15T00:00:00.000Z",
+    "time": 19
+  },
+  {
+    "classification": "burglary",
+    "date": "2020-04-15T00:00:00.000Z",
+    "time": 19
+  },
+  {
+    "classification": "assault",
+    "date": "2020-04-15T00:00:00.000Z",
+    "time": 20
+  },
+  {
+    "classification": "assault",
+    "date": "2020-04-16T00:00:00.000Z",
+    "time": 20
+  },
+  {
+    "classification": "assault",
+    "date": "2020-04-16T00:00:00.000Z",
+    "time": 21
+  },
+  {
+    "classification": "assault",
+    "date": "2020-04-16T00:00:00.000Z",
+    "time": 21
+  },
+  {
+    "classification": "assault",
+    "date": "2020-04-16T00:00:00.000Z",
+    "time": 22
+  },
+  {
+    "classification": "weapon",
+    "date": "2020-04-16T00:00:00.000Z",
+    "time": 22
+  },
+  {
+    "classification": "weapon",
+    "date": "2020-04-17T00:00:00.000Z",
+    "time": 23
+  },
+  {
+    "classification": "fraud",
+    "date": "2020-04-17T00:00:00.000Z",
+    "time": 23
+  },
+  {
+    "classification": "fraud",
+    "date": "2020-04-17T00:00:00.000Z",
+    "time": 23
+  },
+  {
+    "classification": "fraud",
+    "date": "2020-04-18T00:00:00.000Z",
+    "time": 12
+  },
+  {
+    "classification": "fraud",
+    "date": "2020-04-18T00:00:00.000Z",
+    "time": 12
+  }
+]

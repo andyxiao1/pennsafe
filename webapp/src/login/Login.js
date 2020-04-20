@@ -14,12 +14,14 @@ class Login extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const { username, password, isAdmin } = this.state;
+    const { onAccountChange } = this.props;
     axios
       .get(
         `/validateLogin?username=${username}&password=${password}&isAdmin=${isAdmin}`
       )
       .then(({ data }) => {
         if (data.successful) {
+          onAccountChange(isAdmin ? 'Admin' : 'User');
           this.setState(initialState);
         } else {
           throw new Error(data.message);

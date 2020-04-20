@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Card } from 'react-bootstrap';
 import _ from 'lodash';
-import dummyData from '../data/DummyWeatherData';
+// import dummyData from '../data/DummyWeatherData';
 import CurrentWeather from './CurrentWeather';
 
 // constants - TODO put somewhere better/safer
@@ -16,15 +16,15 @@ class WeatherDashboard extends Component {
   };
 
   componentDidMount() {
-    // axios
-    //   .get(
-    //     `https://api.openweathermap.org/data/2.5/onecall?lat=${PENN_LATITUDE}&lon=${PENN_LONGITUDE}&appid=${WEATHER_API_KEY}&units=imperial`
-    //   )
-    //   .then(({ data }) => this.setState({ data }))
-    //   .catch((err) => console.log(err));
+    axios
+      .get(
+        `https://api.openweathermap.org/data/2.5/onecall?lat=${PENN_LATITUDE}&lon=${PENN_LONGITUDE}&appid=${WEATHER_API_KEY}&units=imperial`
+      )
+      .then(({ data }) => this.setState({ data }))
+      .catch((err) => console.log(err));
 
     // use dummy data to save api calls
-    this.setState({ data: dummyData });
+    // this.setState({ data: dummyData });
   }
 
   render() {
