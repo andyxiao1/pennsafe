@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
+import axios from 'axios';
 
-const initialState = { email: '', password: '', isAdmin: false };
+const initialState = { username: '', password: '', isAdmin: false, status: '' };
 
 class Login extends Component {
   state = initialState;
@@ -12,23 +13,36 @@ class Login extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    // TODO handle submit
-    this.setState(initialState);
+    const { username, password, isAdmin } = this.state;
+    axios
+      .get(
+        `/validateLogin?username=${username}&password=${password}&isAdmin=${isAdmin}`
+      )
+      .then(({ data }) => {
+        if (data.successful) {
+          this.setState(initialState);
+        } else {
+          throw new Error(data.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setState({ status: err.message });
+      });
   };
 
   render() {
-    const { email, password, isAdmin } = this.state;
+    const { username, password, isAdmin, status } = this.state;
     return (
       <Container>
         <Form onSubmit={this.handleSubmit}>
-          <Form.Group controlId="formEmail">
-            <Form.Label>Email address</Form.Label>
+          <Form.Group controlId="formUsername">
+            <Form.Label>Username</Form.Label>
             <Form.Control
-              name="email"
+              name="username"
               onChange={this.handleChange}
-              value={email}
-              type="email"
-              placeholder="Enter email"
+              value={username}
+              placeholder="Enter username"
             />
           </Form.Group>
           <Form.Group controlId="formPassword">
@@ -53,6 +67,7 @@ class Login extends Component {
           <Button variant="primary" type="submit">
             Submit
           </Button>
+          <p className="text-danger">{status}</p>
         </Form>
       </Container>
     );

@@ -40,8 +40,7 @@ app.post("/user/:username/ban", (req, res) => {
 });
 
 app.get('/validateLogin', (req, res) => {
-    let username = req.query.username;
-    let password = req.query.password;
+    const { username, password, isAdmin } = req.query;
     if (!username || !password) {
         return res.json({ successful: false, message: "Invalid request params." });
     }
@@ -53,6 +52,8 @@ app.get('/validateLogin', (req, res) => {
             return res.json({ successful: false, message: "User does not exist." });
         } else if (password != result.password) {
             return res.json({ successful: false, message: "Incorrect password." });
+        } else if (isAdmin === 'true' && result.accountType !== 'admin') {
+            return res.json({ successful: false, message: "Not an admin." });
         } else {
             return res.json({ successful: true, message: "" });
         }
@@ -82,6 +83,7 @@ app.post('/signup', (req, res) => {
                     username,
                     password,
                     banned: false,
+                    accountType: 'user',
                     lastLoggedIn: Date.now()
                 }, (err, _) => {
                     let successful = true;
