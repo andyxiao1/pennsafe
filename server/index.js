@@ -244,6 +244,16 @@ app.post('/setCrime', (req, res) => {
     // });
 });
 
+app.post("/notification", (req, res) => {
+    if (!req.body.title || !req.body.message) {
+        res.json({successful: false});
+    } else {
+        notificationHandler.send(req.body.title, req.body.message);
+        res.json({successful: true});
+    }
+});
+
+
 app.use(express.static(path.join(__dirname, '/../webapp/build/')));
 
 server.listen(3000, () => {

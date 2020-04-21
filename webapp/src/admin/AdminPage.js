@@ -3,6 +3,7 @@ import { Container, InputGroup, Spinner, FormControl, Table, Button } from 'reac
 import "./AdminPage.css";
 import MetricsComponent from './MetricsComponent';
 import Util from "../utils/Util";
+import NotificationPanel from "./NotificationPanel";
 
 
 class AdminPage extends Component {
@@ -22,7 +23,7 @@ class AdminPage extends Component {
             users: [],
             errorMessage: null
         };
-        this.debug = false;
+        this.debug = true;
     }
 
     componentDidMount() {
@@ -238,6 +239,7 @@ class AdminPage extends Component {
                     {!this.state.error && !this.state.usersLoaded && <Spinner animation="border" variant="secondary" />}
                 </div>
                 {this.state.usersLoaded && <MetricsComponent users={this.state.users} />}
+                <NotificationPanel/>
                 {this.state.usersLoaded && this.renderTable()}
             </Container>
         )

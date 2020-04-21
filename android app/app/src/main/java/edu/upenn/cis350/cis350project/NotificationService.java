@@ -50,6 +50,7 @@ public class NotificationService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        socket.off("safety-app-notification", onSocketMessage);
         socket.disconnect();
     }
 

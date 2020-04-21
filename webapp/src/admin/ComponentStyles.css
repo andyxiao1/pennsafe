@@ -12,3 +12,35 @@
     font-size: 70%;
     font-style: italic;
 }
+
+.notif_root {
+    margin-bottom: 20px;
+}
+
+.notif_form {
+    display: inline !important;
+}
+
+.notif_inputs {
+    width: 50%;
+    text-align: center;
+    margin: auto;
+}
+
+.notif_input_group {
+    margin-bottom: 10px;
+}
+
+.notif_button {
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.notif_hidden {
+    visibility: hidden;
+}
+
+.notif_message {
+    margin-left: 20px;
+    font-size: 80%;
+}
