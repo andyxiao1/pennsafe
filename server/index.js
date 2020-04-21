@@ -1,16 +1,28 @@
 var express = require('express');
 var app = express();
+const server = require('http').createServer(app);
 const path = require('path');
-
-let DBHandler = require("./dbHandler");
+const DBHandler = require("./dbHandler");
+const NotificationHandler = require("./notificationHandler");
 
 let accountsHandler = new DBHandler("user_accounts", "user_account_records");
 let crimeHandler = new DBHandler("crimes", "crime_records");
+let notificationHandler = new NotificationHandler(server);
+
 accountsHandler.init();
 crimeHandler.init();
 
 app.use(express.json());
 app.use(express.urlencoded());
+
+// socketio.on('connection', () => {
+//     console.log("someone connected");
+// });
+
+// socketio.on("joined", data => {
+//     console.log("joined");
+//     console.log(data);
+// });
 
 app.get("/users", (req, res) => {
     accountsHandler.findMultipleRecords({}, (err, result) => {
@@ -234,6 +246,6 @@ app.post('/setCrime', (req, res) => {
 
 app.use(express.static(path.join(__dirname, '/../webapp/build/')));
 
-app.listen(3000, () => {
+server.listen(3000, () => {
     console.log('Listening on port 3000');
 });
