@@ -23,7 +23,7 @@ class AdminPage extends Component {
             users: [],
             errorMessage: null
         };
-        this.debug = true;
+        this.debug = false;
     }
 
     componentDidMount() {
