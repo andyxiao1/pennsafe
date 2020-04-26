@@ -7,11 +7,11 @@
 
     <string-array name="crimes_array">
         <item>All</item>
-        <item>Crime1</item>
-        <item>Crime2</item>
-        <item>Crime3</item>
-        <item>Crime4</item>
-        <item>Crime5</item>
+        <item>theft</item>
+        <item>robbery</item>
+        <item>burglary</item>
+        <item>weapons</item>
+        <item>other</item>
     </string-array>
 
 </resources>

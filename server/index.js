@@ -4,6 +4,9 @@ const server = require('http').createServer(app);
 const path = require('path');
 const DBHandler = require("./dbHandler");
 const NotificationHandler = require("./notificationHandler");
+const csv = require('csv-parser');
+const fs = require('fs');
+const count = 0
 
 let accountsHandler = new DBHandler("user_accounts", "user_account_records");
 let crimeHandler = new DBHandler("crimes", "crime_records");
@@ -12,17 +15,46 @@ let notificationHandler = new NotificationHandler(server);
 accountsHandler.init();
 crimeHandler.init();
 
+setInterval(intervalFunc, 1000);
+
+function intervalFunc() {
+    try {
+        fs.createReadStream('crimedata.csv')
+        .pipe(csv())
+        .on('data', (row) => {
+            let crime = {
+                    date: row['date'],
+                    time: row['time'],
+                    description: row['description'],
+                    latitude: row['latitude'],
+                    longitude: row['longitude']
+                };
+
+                crimeHandler.findRecord(crime, (err, result) => {
+                    if (!result) {
+                        crimeHandler.addRecord( crime, (err, _) => {
+                            let successful = true;
+                            let message = "";
+                            if (err) {
+                                successful = false;
+                                message = "Backend error."
+                            }
+                        });
+                    } else if (err) {
+                        return res.json({
+                            successful: false,
+                            message: "Backend error."
+                        });
+                    }
+                });
+        })
+    }
+        catch (e) { console.log(e); 
+    }
+}
+
 app.use(express.json());
 app.use(express.urlencoded());
-
-// socketio.on('connection', () => {
-//     console.log("someone connected");
-// });
-
-// socketio.on("joined", data => {
-//     console.log("joined");
-//     console.log(data);
-// });
 
 app.get("/users", (req, res) => {
     accountsHandler.findMultipleRecords({}, (err, result) => {
@@ -38,6 +70,16 @@ app.get("/user/:username", (req, res) => {
     let username = req.params.username;
     accountsHandler.findRecord({username}, (err, result) => {
         res.json({successful: !err, user: result});
+    });
+});
+
+app.get("/crimes", (req, res) => {
+    crimeHandler.findMultipleRecords({}, (err, result) => {
+        if (err) {
+            return res.json({successful: false, crimes: []});
+        } else {
+            return res.json({successful: true, crimes: result});
+        }
     });
 });
 
@@ -203,45 +245,6 @@ app.post("/user/:username/gps", (req, res) => {
         return res.json({successful: false, message: "Invalid request params."});
     }
     
-});
-
-app.post('/setCrime', (req, res) => {
-    let crime = req.body.username;
-    console.log(crime);
-    // if (!username || !password) {
-    //     return res.json({successful: false, message: "Invalid request params."});
-    // }
-    // accountsHandler.findRecord({username}, (err, result) => {
-    //     if (result && result.length) {
-    //         return res.json({
-    //             successful: false,
-    //             message: "User already exists."
-    //         });
-    //     } else if (err) {
-    //         return res.json({
-    //             successful: false,
-    //             message: "Backend error."
-    //         });
-    //     } else {
-    //         accountsHandler.addRecord(
-    //             {
-    //                 username,
-    //                 password,
-    //                 banned: false,
-    //                 accountType: 'user',
-    //                 gps: true,
-    //                 lastLoggedIn: Date.now()
-    //             }, (err, _) => {
-    //             let successful = true;
-    //             let message = "";
-    //             if (err) {
-    //                 successful = false;
-    //                 message = "Backend error."
-    //             }
-    //             return res.json({successful, message});
-    //         });
-    //     }
-    // });
 });
 
 app.post("/notification", (req, res) => {

@@ -132,6 +132,28 @@ public class APIHandler {
                 });
     }
 
+    public void getCrimesData(final APIResponseWrapper responseWrapper) {
+        APIService apiService = getRetrofit().create(APIService.class);
+        Single<CrimesDataAPIResponse> result = apiService.getCrimes();
+        result.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<CrimesDataAPIResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {}
+
+                    @Override
+                    public void onSuccess(CrimesDataAPIResponse crimeDataAPIResponse) {
+                        responseWrapper.onResponse(crimeDataAPIResponse);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        responseWrapper.onResponse(null);
+                    }
+                });
+    }
+
     public void sendImage(String username, String image) {
         APIService apiService = getRetrofit().create(APIService.class);
         Single<DefaultResponse> result = apiService.sendPhoto(username, image);

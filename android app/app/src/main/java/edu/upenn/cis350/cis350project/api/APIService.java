@@ -38,6 +38,9 @@ public interface APIService {
             @Path("username") String username
     );
 
+    @GET("crimes")
+    Single<CrimesDataAPIResponse> getCrimes();
+
     @POST("uploadPhoto")
     @FormUrlEncoded
     Single<DefaultResponse> sendPhoto(

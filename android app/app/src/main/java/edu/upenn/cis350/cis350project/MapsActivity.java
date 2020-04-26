@@ -21,10 +21,19 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 
+import java.util.ArrayList;
+
+import edu.upenn.cis350.cis350project.api.APIHandler;
+import edu.upenn.cis350.cis350project.api.APIResponse;
+import edu.upenn.cis350.cis350project.api.APIResponseWrapper;
+import edu.upenn.cis350.cis350project.api.CrimeData;
+import edu.upenn.cis350.cis350project.api.CrimesDataAPIResponse;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private TextView test;
+    private ArrayList<Marker> crimeMarkers = new ArrayList<>();
+    CrimeData[] crimes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +49,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 // An item was selected. You can retrieve the selected item using
-                String x = parent.getItemAtPosition(pos).toString();
-                ((TextView)findViewById(R.id.test_text)).setText(x);
+                String setting = parent.getItemAtPosition(pos).toString();
+                onPause();
+                if (setting.equals("All")) {
+                    onResume();
+                } else {
+                    for (int i = 0; i < crimes.length; i++) {
+                        CrimeData crime = crimes[i];
+                        if (crime.getDescription().equals(setting)) {
+                            ((TextView) findViewById(R.id.test_text)).setText(String.valueOf(crimes.length));
+                            String date = crime.getDate();
+                            String time = crime.getTime();
+                            String description = crime.getDescription();
+                            double latitude = crime.getLatitude();
+                            double longitude = crime.getLongitude();
+
+                            LatLng coord = new LatLng(latitude, longitude);
+                            crimeMarkers.add(mMap.addMarker(new MarkerOptions().position(coord).title(description + " " +
+                                    date + " " + time)));
+                        }
+                    }
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }});
-
-        test = findViewById(R.id.test_text);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -145,15 +171,68 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         policeTemp = policeTemp.position(police).title("Penn Police");
         mMap.addMarker(policeTemp);
 
-        /*
         // Add crimes to the map
-        for (int i = 0; i < crimes.length; i++) {
-            LatLng curr = new LatLng(crimes[i].latitude, crimes[i].longitude);
-            mMap.addMarker(new MarkerOptions().position(curr).title(crimes[i].description + " " +
-                    crimes[i].data + " " + crimes[i].time));
+        APIHandler apiHandler = new APIHandler();
+        apiHandler.getCrimesData(new APIResponseWrapper() {
+            @Override
+            public void onResponse(APIResponse response) {
+                CrimesDataAPIResponse dataResponse = (CrimesDataAPIResponse) response;
+                if (dataResponse != null && dataResponse.getCrimesData() != null) {
+                    crimes = dataResponse.getCrimesData();
+                    for (int i = 0; i < crimes.length; i++) {
+                        CrimeData curr = crimes[i];
+                        String date = curr.getDate();
+                        String time = curr.getTime();
+                        String description = curr.getDescription();
+                        double latitude = curr.getLatitude();
+                        double longitude = curr.getLongitude();
+
+                        LatLng coord = new LatLng(latitude, longitude);
+                        crimeMarkers.add(mMap.addMarker(new MarkerOptions().position(coord).title(description + " " +
+                                date + " " + time)));
+                    }
+
+
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onPause() {
+        for (int i = 0; i < crimeMarkers.size(); i++) {
+            crimeMarkers.get(i).remove();
         }
-        */
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        // Add crimes to the map
+        APIHandler apiHandler = new APIHandler();
+        apiHandler.getCrimesData(new APIResponseWrapper() {
+            @Override
+            public void onResponse(APIResponse response) {
+                CrimesDataAPIResponse dataResponse = (CrimesDataAPIResponse) response;
+                if (dataResponse != null && dataResponse.getCrimesData() != null) {
+                    CrimeData[] crimes = dataResponse.getCrimesData();
+                    for (int i = 0; i < crimes.length; i++) {
+                        CrimeData curr = crimes[i];
+                        String date = curr.getDate();
+                        String time = curr.getTime();
+                        String description = curr.getDescription();
+                        double latitude = curr.getLatitude();
+                        double longitude = curr.getLongitude();
+
+                        LatLng coord = new LatLng(latitude, longitude);
+                        crimeMarkers.add(mMap.addMarker(new MarkerOptions().position(coord).title(description + " " +
+                                date + " " + time)));
+                    }
 
 
+                }
+            }
+        });
+        super.onResume();
     }
 }
