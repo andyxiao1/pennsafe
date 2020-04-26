@@ -3,6 +3,12 @@ package edu.upenn.cis350.cis350project;
 import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -18,16 +24,37 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private TextView test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        Spinner spinner = (Spinner) findViewById(R.id.crimes_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.crimes_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                // An item was selected. You can retrieve the selected item using
+                String x = parent.getItemAtPosition(pos).toString();
+                ((TextView)findViewById(R.id.test_text)).setText(x);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }});
+
+        test = findViewById(R.id.test_text);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
+
 
     /**
      * Manipulates the map once available.
