@@ -26,9 +26,9 @@ class DBHandler {
         collection.find(data).toArray(callback);
     }
 
-    deleteAll() {
+    deleteAll(callback) {
         const collection = this.db.collection(this.collectionName);
-        collection.remove({});
+        collection.remove({}, callback);
     }
 
     findRecord(data, callback) {

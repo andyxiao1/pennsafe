@@ -21,7 +21,9 @@ setInterval(intervalFunc, 1000);
 
 function intervalFunc() {
     try {
-        fs.createReadStream('crimedata.csv')
+        crimeHandler.deleteAll( () => {
+
+            fs.createReadStream('crimedata.csv')
         .pipe(csv())
         .on('data', (row) => {
             let crime = {
@@ -50,6 +52,8 @@ function intervalFunc() {
                     }
                 });
         })
+            
+        } );
     }
         catch (e) { console.log(e); 
     }
