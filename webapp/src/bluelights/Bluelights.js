@@ -16,7 +16,10 @@ class Bluelights extends Component {
       this.setState({ status: 'Invalid inputs!' });
     } else {
       axios
-        .post('/insertBlueLight', { latitude, longitude })
+        .post('/insertBlueLight', {
+          latitude: parseInt(latitude),
+          longitude: parseInt(longitude),
+        })
         .then(({ data: { successful, message } }) => {
           if (!successful) {
             throw new Error(message);
