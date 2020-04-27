@@ -5,6 +5,7 @@ import Home from './home/Home';
 import Login from './login/Login';
 import Statistics from './statistics/Statistics';
 import AdminPage from './admin/AdminPage';
+import Bluelights from './bluelights/Bluelights';
 
 class App extends Component {
   state = { account: 'Logged Out' };
@@ -38,11 +39,22 @@ class App extends Component {
                     </Nav.Link>
                   </Nav.Item>
                   {isAdmin && (
-                    <Nav.Item>
-                      <Nav.Link eventKey="admin" as={Link} to="/admin">
-                        Admin
-                      </Nav.Link>
-                    </Nav.Item>
+                    <>
+                      <Nav.Item>
+                        <Nav.Link eventKey="admin" as={Link} to="/admin">
+                          Admin
+                        </Nav.Link>
+                      </Nav.Item>
+                      <Nav.Item>
+                        <Nav.Link
+                          eventKey="bluelights"
+                          as={Link}
+                          to="/bluelights"
+                        >
+                          Bluelights
+                        </Nav.Link>
+                      </Nav.Item>
+                    </>
                   )}
                 </Nav>
                 <Navbar.Collapse className="justify-content-end">
@@ -62,7 +74,12 @@ class App extends Component {
                     <Login onAccountChange={this.updateAccount} {...props} />
                   )}
                 ></Route>
-                {isAdmin && <Route path="/admin" component={AdminPage}></Route>}
+                {isAdmin && (
+                  <>
+                    <Route path="/admin" component={AdminPage}></Route>
+                    <Route path="/bluelights" component={Bluelights}></Route>
+                  </>
+                )}
                 <Route path="/" component={Home}></Route>
               </Switch>
             </Col>

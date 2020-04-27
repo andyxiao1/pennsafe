@@ -10,10 +10,12 @@ const count = 0
 
 let accountsHandler = new DBHandler("user_accounts", "user_account_records");
 let crimeHandler = new DBHandler("crimes", "crime_records");
+const bluelightsHandler = new DBHandler("crimes", "blue_lights");
 let notificationHandler = new NotificationHandler(server);
 
 accountsHandler.init();
 crimeHandler.init();
+bluelightsHandler.init();
 
 setInterval(intervalFunc, 1000);
 
@@ -255,6 +257,26 @@ app.post("/notification", (req, res) => {
         res.json({successful: true});
     }
 });
+
+app.post('/insertBlueLight', (req, res) => {
+    const { latitude, longitude } = req.body;
+    if (!latitude || !longitude) {
+        res.json({ successful: false, message: 'invalid lat/long' });
+    }
+
+    bluelightsHandler.addRecord({ latitude, longitude }, (err, result) => {
+        if (err) {
+            res.json({ successful: false, message: err.message});
+        } else {
+            res.json({ successful: true, message: '' });
+        }
+    })
+    // const bluelights = [{latitude: 39.950755, longitude: -75.198928},
+    //     { latitude: 39.961587, longitude: -75.208887},
+    //     { latitude: 39.958889, longitude: -75.204404},
+    //     { latitude: 39.953653, longitude: -75.185253},
+    //     { latitude: 39.962250, longitude: -75.198484}]
+})
 
 
 app.use(express.static(path.join(__dirname, '/../webapp/build/')));

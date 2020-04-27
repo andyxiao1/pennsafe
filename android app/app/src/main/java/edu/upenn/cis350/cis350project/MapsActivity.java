@@ -57,7 +57,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     for (int i = 0; i < crimes.length; i++) {
                         CrimeData crime = crimes[i];
                         if (crime.getDescription().equals(setting)) {
-                            ((TextView) findViewById(R.id.test_text)).setText(String.valueOf(crimes.length));
+//                            ((TextView) findViewById(R.id.test_text)).setText(String.valueOf(crimes.length));
                             String date = crime.getDate();
                             String time = crime.getTime();
                             String description = crime.getDescription();
