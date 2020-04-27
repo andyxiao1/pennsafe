@@ -278,6 +278,16 @@ app.post('/insertBlueLight', (req, res) => {
     //     { latitude: 39.962250, longitude: -75.198484}]
 })
 
+app.get('/getBlueLights', (req, res) => {
+    bluelightsHandler.findMultipleRecords({}, (err, res) => {
+        if (err) {
+            res.json({ successful: false, message: err.message });
+        } else {
+            res.json({ successful: true, message: '', bluelights: res})
+        }
+    })
+})
+
 
 app.use(express.static(path.join(__dirname, '/../webapp/build/')));
 
