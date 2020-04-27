@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import edu.upenn.cis350.cis350project.api.APIHandler;
 import edu.upenn.cis350.cis350project.api.APIResponse;
 import edu.upenn.cis350.cis350project.api.APIResponseWrapper;
+import edu.upenn.cis350.cis350project.api.BluelightData;
+import edu.upenn.cis350.cis350project.api.BluelightDataAPIResponse;
 import edu.upenn.cis350.cis350project.api.CrimeData;
 import edu.upenn.cis350.cis350project.api.CrimesDataAPIResponse;
 
@@ -34,6 +36,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private ArrayList<Marker> crimeMarkers = new ArrayList<>();
     CrimeData[] crimes;
+    BluelightData[] bluelights;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,67 +106,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLngBounds bounds = new LatLngBounds(sw, ne);
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 1080, 1920, 0));
 
-        // Add Bluelight phone markers
-        LatLng one = new LatLng(39.950755, -75.198928);
-        MarkerOptions oneTemp = new MarkerOptions().position(one).icon(BitmapDescriptorFactory.
-                defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        oneTemp = oneTemp.position(one).title("Bluelight");
-        mMap.addMarker(oneTemp);
-
-        LatLng two = new LatLng(39.961587, -75.208887);
-        MarkerOptions twoTemp = new MarkerOptions().position(two).icon(BitmapDescriptorFactory.
-                defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        twoTemp = twoTemp.position(two).title("Bluelight");
-        mMap.addMarker(twoTemp);
-
-        LatLng three = new LatLng(39.958889, -75.204404);
-        MarkerOptions threeTemp = new MarkerOptions().position(three).icon(BitmapDescriptorFactory.
-                defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        threeTemp = threeTemp.position(three).title("Bluelight");
-        mMap.addMarker(threeTemp);
-
-        LatLng four = new LatLng(39.953653, -75.185253);
-        MarkerOptions fourTemp = new MarkerOptions().position(four).icon(BitmapDescriptorFactory.
-                defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        fourTemp = fourTemp.position(four).title("Bluelight");
-        mMap.addMarker(fourTemp);
-
-        LatLng five = new LatLng(39.962250, -75.198484);
-        MarkerOptions fiveTemp = new MarkerOptions().position(five).icon(BitmapDescriptorFactory.
-                defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        fiveTemp = fiveTemp.position(five).title("Bluelight");
-        mMap.addMarker(fiveTemp);
-
-        LatLng six = new LatLng(39.958884, -75.202572);
-        MarkerOptions sixTemp = new MarkerOptions().position(six).icon(BitmapDescriptorFactory.
-                defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        sixTemp = sixTemp.position(six).title("Bluelight");
-        mMap.addMarker(sixTemp);
-
-        LatLng seven = new LatLng(39.958055, -75.192775);
-        MarkerOptions sevenTemp = new MarkerOptions().position(seven).icon(BitmapDescriptorFactory.
-                defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        sevenTemp = sevenTemp.position(seven).title("Bluelight");
-        mMap.addMarker(sevenTemp);
-
-        LatLng eight = new LatLng(39.957206, -75.199978);
-        MarkerOptions eightTemp = new MarkerOptions().position(eight).icon(BitmapDescriptorFactory.
-                defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        eightTemp = eightTemp.position(eight).title("Bluelight");
-        mMap.addMarker(eightTemp);
-
-        LatLng nine = new LatLng(39.952036,-75.190375 );
-        MarkerOptions nineTemp = new MarkerOptions().position(nine).icon(BitmapDescriptorFactory.
-                defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        nineTemp = nineTemp.position(nine).title("Bluelight");
-        mMap.addMarker(nineTemp);
-
-        LatLng ten = new LatLng(39.954165,-75.199898 );
-        MarkerOptions tenTemp = new MarkerOptions().position(ten).icon(BitmapDescriptorFactory.
-                defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        tenTemp = tenTemp.position(ten).title("Bluelight");
-        mMap.addMarker(tenTemp);
-
         // Add Penn Police Location
         LatLng police = new LatLng(39.956626, -75.203648);
         MarkerOptions policeTemp = new MarkerOptions().position(police).icon(BitmapDescriptorFactory.
@@ -171,8 +113,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         policeTemp = policeTemp.position(police).title("Penn Police");
         mMap.addMarker(policeTemp);
 
-        // Add crimes to the map
+        // Add Bluelight phone markers
         APIHandler apiHandler = new APIHandler();
+        apiHandler.getBlueLights(new APIResponseWrapper() {
+            @Override
+            public void onResponse(APIResponse response) {
+                BluelightDataAPIResponse dataResponse = (BluelightDataAPIResponse) response;
+                if (dataResponse != null && dataResponse.getBluelightsData() != null) {
+                    bluelights = dataResponse.getBluelightsData();
+                    for (BluelightData bluelight : bluelights) {
+                        LatLng loc = new LatLng(bluelight.getLatitude(), bluelight.getLongitude());
+                        MarkerOptions marker = new MarkerOptions().position(loc).icon(BitmapDescriptorFactory.
+                                defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                        marker = marker.position(loc).title("Bluelight");
+                        mMap.addMarker(marker);
+                    }
+                }
+            }
+        });
+
+        // Add crimes to the map
+        apiHandler = new APIHandler();
         apiHandler.getCrimesData(new APIResponseWrapper() {
             @Override
             public void onResponse(APIResponse response) {

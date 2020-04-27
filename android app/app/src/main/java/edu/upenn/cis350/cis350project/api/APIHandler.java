@@ -154,6 +154,28 @@ public class APIHandler {
                 });
     }
 
+    public void getBlueLights(final APIResponseWrapper responseWrapper) {
+        APIService apiService = getRetrofit().create(APIService.class);
+        Single<BluelightDataAPIResponse> result = apiService.getBluelights();
+        result.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<BluelightDataAPIResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {}
+
+                    @Override
+                    public void onSuccess(BluelightDataAPIResponse bluelightDataAPIResponse) {
+                        responseWrapper.onResponse(bluelightDataAPIResponse);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        responseWrapper.onResponse(null);
+                    }
+                });
+    }
+
     public void sendImage(String username, String image) {
         APIService apiService = getRetrofit().create(APIService.class);
         Single<DefaultResponse> result = apiService.sendPhoto(username, image);

@@ -279,11 +279,11 @@ app.post('/insertBlueLight', (req, res) => {
 })
 
 app.get('/getBlueLights', (req, res) => {
-    bluelightsHandler.findMultipleRecords({}, (err, res) => {
+    bluelightsHandler.findMultipleRecords({}, (err, result) => {
         if (err) {
             res.json({ successful: false, message: err.message });
         } else {
-            res.json({ successful: true, message: '', bluelights: res})
+            res.json({ successful: true, message: '', bluelights: result})
         }
     })
 })

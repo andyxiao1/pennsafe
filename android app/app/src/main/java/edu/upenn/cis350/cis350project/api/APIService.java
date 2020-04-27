@@ -41,6 +41,9 @@ public interface APIService {
     @GET("crimes")
     Single<CrimesDataAPIResponse> getCrimes();
 
+    @GET("getBlueLights")
+    Single<BluelightDataAPIResponse> getBluelights();
+
     @POST("uploadPhoto")
     @FormUrlEncoded
     Single<DefaultResponse> sendPhoto(
